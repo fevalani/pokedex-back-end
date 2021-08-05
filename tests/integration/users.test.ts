@@ -17,20 +17,26 @@ afterAll(async () => {
   await getConnection().close();
 });
 
-describe("GET /users", () => {
-  it("should answer with text \"OK!\" and status 200", async () => {
+describe("GET /sign-up", () => {
+  it("should answer status 201 for valid params", async () => {
     const user = await createUser();
 
-    const response = await supertest(app).get("/users");
-    
+    const response = await supertest(app).get("/sign-up");
+
     expect(response.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          email: user.email
-        })
+          email: user.email,
+        }),
       ])
     );
 
     expect(response.status).toBe(200);
   });
+
+  it("should answer status 400 for invalid e-mail", async () => {});
+
+  it("should answer status 409 for exists emails", async () => {});
+
+  it("should answer status 400 if ", async () => {});
 });
