@@ -6,8 +6,6 @@ import * as userService from "../services/userService";
 export async function postUsers(req: Request, res: Response) {
   const { body } = req;
   if (!!UserSchema.validate(body).error) {
-    console.log(body);
-
     return res.sendStatus(400);
   }
   if (await userService.postUser(body)) {

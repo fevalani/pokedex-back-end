@@ -47,7 +47,7 @@ describe("POST /sign-up", () => {
 
   it("should answer status 409 for exist email", async () => {
     const user = createUser();
-    await insertUser(user);
+    await insertUser({ email: user.email, password: user.password });
 
     const response = await supertest(app).post("/sign-up").send(user);
 

@@ -14,10 +14,6 @@ export function createUser() {
   return user;
 }
 
-export async function insertUser(user: {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}) {
+export async function insertUser(user: { email: string; password: string }) {
   await getRepository(User).insert(user);
 }
