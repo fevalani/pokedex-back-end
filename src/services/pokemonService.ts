@@ -2,18 +2,48 @@ import { getRepository } from "typeorm";
 import Pokemons from "../entities/Pokemons";
 import PokemonsUsers from "../entities/PokemonsUsers";
 
+interface Poke {
+  id: number;
+  name: string;
+  number: number;
+  image: string;
+  weight: number;
+  height: number;
+  baseExp: number;
+  description: string;
+  isMyPokemons: boolean;
+}
+
 export async function getPokemons() {
   const pokemons = await getRepository(Pokemons).find();
   return pokemons;
 }
 
-export async function getMyPokemonsIds(userId: number) {
-  const myPokemonsIds = (
+export async function getPokemonsUserIds(userId: number) {
+  const pokemonsUserIds = (
     await getRepository(PokemonsUsers).find({ userId })
   ).map((item) => item.pokemonId);
-  return myPokemonsIds;
+  return pokemonsUserIds;
 }
 
-export function createSendPokemonObject(pokemonsIds, pokemons) {
-  return false;
+export function createSendPokemonObject(
+  allPokemons: Pokemons[],
+  userPokemonsIds: number[]
+) {
+  interface userPokemonId {
+    [key: number]: boolean;
+  }
+  const userPokemonsId: userPokemonId = {};
+  userPokemonsIds.forEach((item) => {
+    userPokemonsId[item] = true;
+  });
+
+  const newArray: Array<Poke> = allPokemons.map((pokemon) => {
+    return {
+      ...pokemon,
+      isMyPokemons: userPokemonsId[pokemon.id] ? true : false,
+    };
+  });
+
+  return newArray;
 }
