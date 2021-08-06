@@ -1,9 +1,10 @@
 import { getRepository } from "typeorm";
 import faker from "faker";
+import bcrypt from "bcrypt";
 
 import User from "../../src/entities/User";
 
-export function createUser() {
+export function createSignUpUser() {
   const password = faker.internet.password();
   const user = {
     email: faker.internet.email(),
@@ -14,6 +15,17 @@ export function createUser() {
   return user;
 }
 
+export function createSignInUser() {
+  const user = {
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  };
+
+  return user;
+}
+
 export async function insertUser(user: { email: string; password: string }) {
-  await getRepository(User).insert(user);
+  const { email, password } = user;
+  const newPassword = bcrypt.hashSync(password, 12);
+  await getRepository(User).insert({ email, password: newPassword });
 }
