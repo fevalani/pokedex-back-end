@@ -17,26 +17,27 @@ afterAll(async () => {
   await getConnection().close();
 });
 
-describe("GET /sign-up", () => {
+describe("POST /sign-up", () => {
   it("should answer status 201 for valid params", async () => {
     const user = await createUser();
 
-    const response = await supertest(app).get("/sign-up");
+    const response = await supertest(app).post("/sign-up").send(user);
 
     expect(response.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           email: user.email,
+          password: user.password,
         }),
       ])
     );
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
   });
 
-  it("should answer status 400 for invalid e-mail", async () => {});
+  it("should answer status 400 for invalid email", async () => {});
 
-  it("should answer status 409 for exists emails", async () => {});
+  it("should answer status 409 for exists email", async () => {});
 
-  it("should answer status 400 if ", async () => {});
+  it("should answer status 400 if password and ConfirmPassword are different ", async () => {});
 });

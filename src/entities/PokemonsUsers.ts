@@ -2,7 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from "typeorm";
 import Pokemons from "./Pokemons";
@@ -19,11 +19,9 @@ export default class PokemonsUsers {
   @Column()
   pokemonId: number;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.pokemonsUser)
   user: User;
 
-  @OneToOne(() => Pokemons)
-  @JoinColumn()
+  @ManyToOne(() => Pokemons, (pokemon) => pokemon.pokemons)
   pokemon: Pokemons;
 }
