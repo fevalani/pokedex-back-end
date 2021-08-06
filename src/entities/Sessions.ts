@@ -8,7 +8,7 @@ import {
 import User from "./User";
 
 @Entity("sessions")
-export default class Session {
+export default class Sessions {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,6 +1,6 @@
 import "./setup";
 
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import "reflect-metadata";
 
@@ -13,6 +13,11 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/sign-up", userController.postUsers);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  res.sendStatus(500);
+});
 
 export async function init() {
   await connectDatabase();

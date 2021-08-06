@@ -2,7 +2,7 @@ import supertest from "supertest";
 import { getConnection } from "typeorm";
 
 import app, { init } from "../../src/app";
-import { createUser } from "../factories/userFactory";
+import { createUser, insertUser } from "../factories/userFactory";
 import { clearDatabase } from "../utils/database";
 
 beforeAll(async () => {
@@ -14,30 +14,43 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
+  await clearDatabase();
   await getConnection().close();
 });
 
 describe("POST /sign-up", () => {
   it("should answer status 201 for valid params", async () => {
-    const user = await createUser();
+    const user = createUser();
 
     const response = await supertest(app).post("/sign-up").send(user);
-
-    expect(response.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          email: user.email,
-          password: user.password,
-        }),
-      ])
-    );
 
     expect(response.status).toBe(201);
   });
 
-  it("should answer status 400 for invalid email", async () => {});
+  it("should answer status 400 for invalid email", async () => {
+    const user = createUser();
+    user.email = "whatever";
 
-  it("should answer status 409 for exists email", async () => {});
+    const response = await supertest(app).post("/sign-up").send(user);
 
-  it("should answer status 400 if password and ConfirmPassword are different ", async () => {});
+    expect(response.status).toBe(400);
+  });
+
+  it("should answer status 400 if password and ConfirmPassword are different ", async () => {
+    let user = createUser();
+    user.confirmPassword = "whatever";
+
+    const response = await supertest(app).post("/sign-up").send(user);
+
+    expect(response.status).toBe(400);
+  });
+
+  it("should answer status 409 for exist email", async () => {
+    const user = createUser();
+    await insertUser(user);
+
+    const response = await supertest(app).post("/sign-up").send(user);
+
+    expect(response.status).toBe(409);
+  });
 });

@@ -3,7 +3,7 @@ import faker from "faker";
 
 import User from "../../src/entities/User";
 
-export async function createUser() {
+export function createUser() {
   const password = faker.internet.password();
   const user = {
     email: faker.internet.email(),
@@ -11,7 +11,13 @@ export async function createUser() {
     confirmPassword: password,
   };
 
-  await getRepository(User).insert(user);
-
   return user;
+}
+
+export async function insertUser(user: {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}) {
+  await getRepository(User).insert(user);
 }
