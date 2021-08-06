@@ -1,7 +1,9 @@
 import { getRepository } from "typeorm";
 import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 
 import User from "../entities/User";
+import Sessions from "../entities/Sessions";
 
 interface Body {
   email: string;
@@ -24,4 +26,27 @@ export async function postUser(body: Body) {
     await getRepository(User).insert(user);
     return false;
   }
+}
+
+export async function getAndCompareUser(body: {
+  email: string;
+  password: string;
+}) {
+  const existsUser = await getRepository(User).findOne({
+    where: { email: body.email },
+  });
+
+  if (!existsUser) return false;
+
+  if (bcrypt.compareSync(body.password, existsUser.password)) {
+    return existsUser.id;
+  } else {
+    return false;
+  }
+}
+
+export async function createSession(userId: number) {
+  const token = uuid();
+  await getRepository(Sessions).insert({ userId, token });
+  return token;
 }
