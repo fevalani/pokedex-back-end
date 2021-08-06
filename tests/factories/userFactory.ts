@@ -27,5 +27,7 @@ export function createSignInUser() {
 export async function insertUser(user: { email: string; password: string }) {
   const { email, password } = user;
   const newPassword = bcrypt.hashSync(password, 12);
-  await getRepository(User).insert({ email, password: newPassword });
+  return await (
+    await getRepository(User).insert({ email, password: newPassword })
+  ).identifiers[0].id;
 }

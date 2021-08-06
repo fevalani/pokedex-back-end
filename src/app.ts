@@ -7,14 +7,17 @@ import "reflect-metadata";
 import connectDatabase from "./database";
 
 import * as userController from "./controllers/userConroller";
+import * as pokemonController from "./controllers/pokemonController";
+import { authenticate } from "./middlewares/authMiddleware";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.post("/sign-up", userController.postUsers);
-
 app.post("/sign-in", userController.sendToken);
+
+app.get("/pokemons", authenticate, pokemonController.getPokemons);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err);
