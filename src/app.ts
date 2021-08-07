@@ -18,6 +18,12 @@ app.post("/sign-up", userController.postUsers);
 app.post("/sign-in", userController.sendToken);
 
 app.get("/pokemons", authenticate, pokemonController.getPokemons);
+app.post("/my-pokemons/:id/add", authenticate, pokemonController.catchPokemon);
+app.post(
+  "/my-pokemons/:id/remove",
+  authenticate,
+  pokemonController.dropPokemon
+);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err);

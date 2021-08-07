@@ -47,3 +47,19 @@ export function createSendPokemonObject(
 
   return newArray;
 }
+
+export async function insertPokemonUser(body: {
+  userId: number;
+  pokemonId: number;
+}) {
+  await getRepository(PokemonsUsers).insert(body);
+  return;
+}
+
+export async function dropPokemonUser(body: {
+  userId: number;
+  pokemonId: number;
+}) {
+  await getRepository(PokemonsUsers).delete(body);
+  return;
+}

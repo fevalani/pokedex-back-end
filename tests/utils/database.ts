@@ -8,6 +8,6 @@ import User from "../../src/entities/User";
 export async function clearDatabase() {
   await getRepository(Sessions).delete({});
   await getRepository(PokemonsUsers).delete({});
-  await getRepository(User).delete({});
   await getRepository(Pokemons).delete({});
+  await getRepository(User).delete({});
 }

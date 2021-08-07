@@ -9,6 +9,7 @@ export async function authenticate(
 ) {
   const token = req.headers.authorization.split("Bearer ")[1];
   const existsToken = await getRepository(Sessions).findOne({ token });
+
   if (!existsToken) return res.sendStatus(401);
   res.locals = { userId: existsToken.id };
   next();
