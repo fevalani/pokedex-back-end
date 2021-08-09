@@ -11,7 +11,7 @@ interface Poke {
   height: number;
   baseExp: number;
   description: string;
-  isMyPokemons: boolean;
+  inMyPokemons: boolean;
 }
 
 export async function getPokemons() {
@@ -41,7 +41,7 @@ export function createSendPokemonObject(
   const newArray: Array<Poke> = allPokemons.map((pokemon) => {
     return {
       ...pokemon,
-      isMyPokemons: userPokemonsId[pokemon.id] ? true : false,
+      inMyPokemons: userPokemonsId[pokemon.id] ? true : false,
     };
   });
 
