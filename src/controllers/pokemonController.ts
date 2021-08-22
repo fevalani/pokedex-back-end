@@ -15,7 +15,7 @@ export async function getPokemons(req: Request, res: Response) {
   res.send(pokemonsArray);
 }
 
-export async function catchPokemon(req: Request, res: Response) {
+export async function addToMyPokemons(req: Request, res: Response) {
   const userId: number = res.locals["userId"];
   const pokemonId: number = parseInt(req.params.id);
 
@@ -23,7 +23,7 @@ export async function catchPokemon(req: Request, res: Response) {
   res.sendStatus(200);
 }
 
-export async function dropPokemon(req: Request, res: Response) {
+export async function removeFromMyPokemons(req: Request, res: Response) {
   const userId: number = res.locals["userId"];
   const pokemonId: number = parseInt(req.params.id);
 

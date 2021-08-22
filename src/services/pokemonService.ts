@@ -15,7 +15,7 @@ interface Poke {
 }
 
 export async function getPokemons() {
-  const pokemons = await getRepository(Pokemons).find();
+  const pokemons: Pokemons[] = await getRepository(Pokemons).find();
   return pokemons;
 }
 

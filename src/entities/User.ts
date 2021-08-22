@@ -13,5 +13,5 @@ export default class User {
   password: string;
 
   @OneToMany(() => PokemonsUsers, (pokemonsUser) => pokemonsUser.user)
-  pokemonsUser: PokemonsUsers;
+  pokemonsUser: PokemonsUsers[];
 }
