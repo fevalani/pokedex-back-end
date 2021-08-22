@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "populateFirstGenPokemons": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/databasePopulate/getFirstGenPokemons.js",
     "test": "NODE_ENV=test npx jest -i",
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "build": "NODE_ENV=production npx tsc --outDir dist && npm run migration:run",
