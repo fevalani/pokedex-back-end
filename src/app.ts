@@ -14,11 +14,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
-  res.sendStatus(500);
-});
-
 app.post("/sign-up", userController.postUsers);
 app.post("/sign-in", userController.sendToken);
 
@@ -33,6 +28,13 @@ app.post(
   authenticate,
   pokemonController.removeFromMyPokemons
 );
+
+app.get("/populate/database", pokemonController.populateDatabase);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  res.sendStatus(500);
+});
 
 export async function init() {
   await connectDatabase();

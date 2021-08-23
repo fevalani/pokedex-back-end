@@ -11,6 +11,6 @@ export async function authenticate(
   const existsToken = await getRepository(Sessions).findOne({ token });
 
   if (!existsToken) return res.sendStatus(401);
-  res.locals = { userId: existsToken.id };
+  res.locals = { userId: existsToken.userId };
   next();
 }

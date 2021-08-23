@@ -23,6 +23,7 @@ export async function getPokemonsUserIds(userId: number) {
   const pokemonsUserIds = (
     await getRepository(PokemonsUsers).find({ userId })
   ).map((item) => item.pokemonId);
+
   return pokemonsUserIds;
 }
 
@@ -56,7 +57,7 @@ export async function insertPokemonUser(body: {
   return;
 }
 
-export async function dropPokemonUser(body: {
+export async function deletePokemonUser(body: {
   userId: number;
   pokemonId: number;
 }) {

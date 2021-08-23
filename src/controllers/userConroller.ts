@@ -24,7 +24,7 @@ export async function sendToken(req: Request, res: Response) {
 
   if (userId) {
     const token = await userService.createSession(userId);
-    res.send(token);
+    res.send({ token });
   } else {
     return res.sendStatus(401);
   }
