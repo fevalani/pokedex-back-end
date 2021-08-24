@@ -14,8 +14,8 @@ interface Poke {
   inMyPokemons: boolean;
 }
 
-export async function getPokemons() {
-  const pokemons: Pokemons[] = await getRepository(Pokemons).find();
+export async function getPokemons(): Promise<Pokemons[]> {
+  const pokemons = await getRepository(Pokemons).find();
   return pokemons;
 }
 
